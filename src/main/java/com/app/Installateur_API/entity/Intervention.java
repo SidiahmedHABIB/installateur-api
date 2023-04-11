@@ -1,6 +1,5 @@
 package com.app.Installateur_API.entity;
 
-import com.app.Installateur_API.enmus.InterStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,9 +17,8 @@ public class Intervention {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String comment;
-    private Date appointmentAt;
-    //@Enumerated(EnumType.STRING)
-    private InterStatus status;
+    private String appointmentAt;
+    private String status;
     private Date creatAt;
     private Date updateAt;
     @ManyToOne()

@@ -4,10 +4,14 @@ package com.app.Installateur_API.controller;
 import com.app.Installateur_API.entity.User;
 import com.app.Installateur_API.service.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/users")
@@ -20,10 +24,21 @@ public class UserController {
         List<User> users = iUserService.getAllUser();
         return ResponseEntity.ok().body(users);
     }
-    @PostMapping("/{user}")
-    public ResponseEntity<User> creatNewUser(@RequestParam("file") User user){
+    @PostMapping("/")
+    public ResponseEntity<User> creatNewUser(@RequestBody User user){
         User userSaved = iUserService.creatNewUser(user);
         return ResponseEntity.ok().body(userSaved);
+    }
+    @PostMapping("/login/")
+    public ResponseEntity<Map<String,User>> loginUsers(@RequestParam("email") String email, @RequestParam("password") String password){
+        User user = iUserService.loginUser(email,password);
+        return ResponseEntity.ok().body(Map.of("user",user));
+        //return new ResponseEntity<>(user, HttpStatus.CREATED);
+    }
+    @PostMapping("/updateProfile/")
+    public ResponseEntity<Map<String,User>> updateProfile(@RequestBody() User user,@RequestParam MultipartFile image)throws IOException {
+        User userSaved = iUserService.modifyProfile(user,image);
+        return ResponseEntity.ok().body(Map.of("profile",user));
     }
 
 }

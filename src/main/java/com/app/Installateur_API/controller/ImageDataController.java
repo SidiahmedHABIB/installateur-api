@@ -1,6 +1,7 @@
 package com.app.Installateur_API.controller;
 
 
+import com.app.Installateur_API.entity.ImageData;
 import com.app.Installateur_API.service.classes.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ public class ImageDataController {
 
     @PostMapping("/upload")
     public ResponseEntity<?> uploadImage(@RequestParam("image") MultipartFile file) throws IOException {
-        String uploadImage = service.uploadImage(file);
+        ImageData uploadImage = service.uploadImage(file);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(uploadImage);
     }

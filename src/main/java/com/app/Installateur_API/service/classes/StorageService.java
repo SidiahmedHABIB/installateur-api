@@ -21,7 +21,7 @@ public class StorageService {
     @Autowired
     private StorageRepository repository;
 
-    public String uploadImage(MultipartFile file) throws IOException {
+    public ImageData uploadImage(MultipartFile file) throws IOException {
 
         ImageData imageData = repository.save(ImageData.builder()
                 .name(UUID.randomUUID().toString())
@@ -31,7 +31,7 @@ public class StorageService {
                 .updateAt(new Date())
                 .build());
         if (imageData != null) {
-            return "image uploaded successfully : " + imageData.getName();
+            return imageData;
         }
         return null;
     }

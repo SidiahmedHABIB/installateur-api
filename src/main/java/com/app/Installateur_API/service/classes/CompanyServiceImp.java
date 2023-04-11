@@ -9,6 +9,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -38,6 +39,15 @@ public class CompanyServiceImp implements ICompanyService {
 
     @Override
     public Company modifyCompany(Company company) {
-        return null;
+        Company updateC = new Company();
+        updateC.setId(company.getId());
+        updateC.setName(company.getName());
+        updateC.setEmail(company.getEmail());
+        updateC.setLocation(company.getLocation());
+        updateC.setPhone(company.getPhone());
+        updateC.setImageCompany(company.getImageCompany());
+        updateC.setCreatAt(company.getCreatAt());
+        updateC.setUpdateAt(new Date());
+        return companyRepository.save(company);
     }
 }

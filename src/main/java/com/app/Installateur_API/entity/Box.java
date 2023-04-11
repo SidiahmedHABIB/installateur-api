@@ -21,8 +21,8 @@ public class Box {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    //@Enumerated(EnumType.STRING)
-    private BoxStatus status;
+    private String status;
+    private String name;
     private String entity;
     private String matricul;
     private String nserie;
