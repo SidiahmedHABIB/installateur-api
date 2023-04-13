@@ -25,6 +25,7 @@ public class Box {
     private String name;
     private String entity;
     private String matricul;
+    private String boxValue;
     private String nserie;
     private Date creatAt;
     private Date updateAt;

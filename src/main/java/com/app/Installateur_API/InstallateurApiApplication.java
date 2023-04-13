@@ -85,17 +85,18 @@ public class InstallateurApiApplication {
 			System.out.println("**********Box***********");
 			Company company = iCompanyService.getCompanyById(3L);
 			//Report report = reportRepository.findById(1L).get();
-			Stream.of("qq-dd-ff","sd-dd-ff","gg-ee-cc","zz-dd-ff","ge-dd-ff").forEach(entity->{
+			/*Stream.of("qq-dd-ff","sd-dd-ff","gg-ee-cc","zz-dd-ff","ge-dd-ff").forEach(entity->{
 				Box newBox = new Box();
 				newBox.setName("strada_222");
 				newBox.setEntity(entity);
-				newBox.setMatricul(UUID.randomUUID().toString());
+				newBox.setMatricul("");
+				newBox.setBoxValue("");
 				newBox.setNserie("123456");
 				newBox.setCompanyBox(company);
 				newBox.setCreatAt(new Date());
 				newBox.setUpdateAt(new Date());
 				iBoxService.creatNewBox(newBox);
-			});
+			});*/
 			System.out.println("**********Box***********");
 			System.out.println("**********Intervention***********");
 			/*Stream.of("sqfdaea dqsd dhjjhd kjlqj ldjoiajei djnd osiha  spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning").forEach(comment->{

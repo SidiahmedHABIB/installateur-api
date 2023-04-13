@@ -21,6 +21,11 @@ public class BoxController {
         List<Box> boxs = iBoxService.getAllBox();
         return ResponseEntity.ok().body(boxs);
     }
+    @GetMapping("/id/{id}")
+    public ResponseEntity<Box> getBoxbyId(@PathVariable Long id){
+        Box box = iBoxService.getBoxById(id);
+        return ResponseEntity.ok().body(box);
+    }
     @GetMapping("/pageAll/{companyId}&{page}&{size}")
     public ResponseEntity<PageBox> getPageBoxByCompany(@PathVariable Long companyId, @PathVariable int page, @PathVariable int size){
         PageBox pageBox = iBoxService.getPageBoxByCompany(companyId,page, size);

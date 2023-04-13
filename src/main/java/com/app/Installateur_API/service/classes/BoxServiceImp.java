@@ -27,6 +27,7 @@ public class BoxServiceImp implements IBoxService {
         newBox.setEntity(box.getEntity());
         newBox.setMatricul(box.getMatricul());
         newBox.setStatus("NOTINSTALLED");
+        newBox.setBoxValue(box.getBoxValue());
         newBox.setNserie(box.getNserie());
         newBox.setCompanyBox(box.getCompanyBox());
         newBox.setReportBox(null);
@@ -77,6 +78,7 @@ public class BoxServiceImp implements IBoxService {
         newBox.setEntity(box.getEntity());
         newBox.setMatricul(box.getMatricul());
         newBox.setStatus("INSTALLED");
+        newBox.setBoxValue(box.getBoxValue());
         newBox.setNserie(box.getNserie());
         newBox.setCompanyBox(box.getCompanyBox());
         newBox.setReportBox(box.getReportBox());

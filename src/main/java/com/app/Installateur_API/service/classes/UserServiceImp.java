@@ -1,6 +1,5 @@
 package com.app.Installateur_API.service.classes;
 
-
 import com.app.Installateur_API.entity.ImageData;
 import com.app.Installateur_API.entity.User;
 import com.app.Installateur_API.repository.UserRepository;
@@ -24,6 +23,9 @@ public class UserServiceImp implements IUserService {
     @Override
     public User creatNewUser(User user) {
         return userRepository.save(user);
+
+
+
     }
 
     @Override

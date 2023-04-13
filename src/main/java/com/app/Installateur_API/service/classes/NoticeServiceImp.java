@@ -1,14 +1,20 @@
 package com.app.Installateur_API.service.classes;
+import com.app.Installateur_API.entity.Intervention;
 import com.app.Installateur_API.entity.Notice;
+import com.app.Installateur_API.entity.PageIntervention;
+import com.app.Installateur_API.entity.PageNotice;
 import com.app.Installateur_API.repository.NoticeRepository;
 import com.app.Installateur_API.service.interfaces.INoticeService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -36,6 +42,15 @@ public class NoticeServiceImp implements INoticeService {
         } catch (Exception e) {
             throw new Exception("Could not save File: " + fileName);
         }
+    }
+
+    @Override
+    public PageNotice getPageNotice(int page, int size) {
+        PageNotice p= new PageNotice();
+        Page<Notice> interventionPage = noticeRepository.findAll(PageRequest.of(page, size));
+        p.setNotices(interventionPage.getContent());
+        p.setTotalPages(interventionPage.getTotalPages());
+        return p;
     }
 
     @Override
