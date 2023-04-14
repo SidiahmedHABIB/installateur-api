@@ -35,10 +35,17 @@ public class UserController {
         return ResponseEntity.ok().body(Map.of("user",user));
         //return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
-    @PostMapping("/updateProfile/")
-    public ResponseEntity<Map<String,User>> updateProfile(@RequestBody() User user,@RequestParam MultipartFile image)throws IOException {
-        User userSaved = iUserService.modifyProfile(user,image);
-        return ResponseEntity.ok().body(Map.of("profile",user));
+    @PostMapping("/updateProfile")
+    public ResponseEntity<User> updateProfile(@RequestParam("image") MultipartFile file,
+                                                          @RequestParam("id") Long id)throws IOException {
+        User userSaved = iUserService.modifyProfile(id,file);
+        return ResponseEntity.ok().body(userSaved);
     }
+    @GetMapping("/id/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable Long id){
+        User users = iUserService.getUserById(id);
+        return ResponseEntity.ok().body(users);
+    }
+
 
 }

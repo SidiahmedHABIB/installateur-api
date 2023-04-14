@@ -3,6 +3,7 @@ package com.app.Installateur_API.service.classes;
 
 import com.app.Installateur_API.entity.*;
 import com.app.Installateur_API.repository.BoxRepository;
+import com.app.Installateur_API.repository.StorageRepository;
 import com.app.Installateur_API.service.interfaces.IBoxService;
 import com.app.Installateur_API.service.interfaces.ICompanyService;
 import jakarta.transaction.Transactional;
@@ -10,16 +11,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 @Service
 @Transactional
 public class BoxServiceImp implements IBoxService {
+
     @Autowired
     BoxRepository boxRepository;
     @Autowired
+    StorageRepository storageRepository;
+    @Autowired
     ICompanyService iCompanyService;
+    @Autowired
+    StorageService storageService;
     @Override
     public Box creatNewBox(Box box) {
         Box newBox = new Box();
@@ -62,8 +70,29 @@ public class BoxServiceImp implements IBoxService {
     }
 
     @Override
+    public String boxUploadImages(MultipartFile file1, MultipartFile file2, Long id)throws IOException {
+        Box box = getBoxById(id);
+        ImageData image1 = storageService.boxUploadImage(file1,box);
+        ImageData image2 = storageService.boxUploadImage(file2,box);
+        if (image1 != null&&image1 != null) {
+            return "success";
+        }
+        return null;
+    }
+
+    @Override
     public Box getBoxById(Long id) {
         return boxRepository.findById(id).get();
+    }
+
+    @Override
+    public PageImage getBoxImages(Long id) {
+        Box box = getBoxById(id);
+        PageImage pageImage = new PageImage();
+        Page<ImageData> imagePage =storageRepository.findByBox(box,PageRequest.of(0, 2));
+        pageImage.setImages(imagePage.getContent());
+        pageImage.setTotalPages(imagePage.getTotalPages());
+        return pageImage;
     }
 
     @Override

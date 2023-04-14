@@ -100,7 +100,7 @@ public class InstallateurApiApplication {
 			System.out.println("**********Box***********");
 			System.out.println("**********Intervention***********");
 			/*Stream.of("sqfdaea dqsd dhjjhd kjlqj ldjoiajei djnd osiha  spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning").forEach(comment->{
-				Company company1 = iCompanyService.getCompanyById(3L);
+				Company company1 = iCompanyService.getCompanyById(1L);
 				Intervention newIntervention = new Intervention();
 				newIntervention.setComment(comment);
 				newIntervention.setStatus("TOPLAN");
@@ -114,7 +114,16 @@ public class InstallateurApiApplication {
 			System.out.println("**********Intervention***********");
 			System.out.println("**********loginuer***********");
 			User user = iUserService.loginUser("sa@sda.sda","123456");
-			System.out.println("**********loginuser***********");
+            System.out.println("**********loginuser***********");
+            System.out.println("**********imageData***********");
+           /* Box box = iBoxService.getBoxById(1L);
+            ImageData imageData = storageRepository.findById(1L).get();
+            imageData.setBox(box);
+            storageRepository.save(imageData);
+            ImageData imageData2 = storageRepository.findById(4L).get();
+            imageData2.setBox(box);
+            storageRepository.save(imageData2);*/
+            System.out.println("**********imageData***********");
 
 
 

@@ -1,9 +1,10 @@
 package com.app.Installateur_API.service.interfaces;
 
-import com.app.Installateur_API.entity.Box;
-import com.app.Installateur_API.entity.PageBox;
-import com.app.Installateur_API.entity.PageIntervention;
+import com.app.Installateur_API.entity.*;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface IBoxService {
@@ -11,8 +12,9 @@ public interface IBoxService {
     public List<Box> getAllBox();
     public PageBox getPageBoxByStatusAndCompany(String status,Long companyId, int page, int size);
     public PageBox getPageBoxByCompany(Long companyId, int page, int size);
-
+    public String boxUploadImages(MultipartFile file1, MultipartFile file2, Long id)throws IOException;
     public Box getBoxById(Long id);
+    public PageImage getBoxImages(Long id);
     public void deleteBox(Long id);
     public Box modifyBox(Box box);
 }

@@ -63,16 +63,10 @@ public class UserServiceImp implements IUserService {
     }
 
     @Override
-    public User modifyProfile(User user, MultipartFile image) throws IOException {
+    public User modifyProfile(Long id, MultipartFile image) throws IOException {
         ImageData imageData = storageService.uploadImage(image);
-        User profileUpdate = new User();
-        profileUpdate.setId(user.getId());
-        profileUpdate.setFirstName(user.getFirstName());
-        profileUpdate.setLastName(user.getLastName());
-        profileUpdate.setEmail(user.getEmail());
-        profileUpdate.setPassword(user.getPassword());
+        User profileUpdate = getUserById(id);
         profileUpdate.setImageUser(imageData);
-        profileUpdate.setCreatAt(user.getCreatAt());
         profileUpdate.setUpdateAt(new Date());
         return userRepository.save(profileUpdate);
     }

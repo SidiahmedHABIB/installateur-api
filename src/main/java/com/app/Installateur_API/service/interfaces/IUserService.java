@@ -13,5 +13,5 @@ public interface IUserService {
     public User loginUser(String email ,String password);
     public void deleteUser(Long id);
     public User modifyUser(User user);
-    public User modifyProfile(User user, MultipartFile image)throws IOException;
+    public User modifyProfile(Long id, MultipartFile image)throws IOException;
 }
