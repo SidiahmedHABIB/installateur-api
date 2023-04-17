@@ -1,5 +1,6 @@
 package com.app.Installateur_API.controller;
 
+import com.app.Installateur_API.entity.Box;
 import com.app.Installateur_API.entity.Report;
 import com.app.Installateur_API.service.interfaces.IReportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,8 @@ public class ReportController {
     @Autowired
     IReportService iReportService;
     @PostMapping("/upload")
-    public ResponseEntity<?> uploadImage(@RequestParam("report") MultipartFile file) throws Exception {
-        String uploadNotice = iReportService.uploadReport(file);
+    public ResponseEntity<Report> uploadImage(@RequestParam("report") MultipartFile file) throws Exception {
+        Report uploadNotice = iReportService.uploadReport(file);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(uploadNotice);
     }

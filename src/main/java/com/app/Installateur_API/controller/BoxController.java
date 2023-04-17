@@ -34,6 +34,11 @@ public class BoxController {
         PageImage boxImage = iBoxService.getBoxImages(id);
         return ResponseEntity.ok().body(boxImage);
     }
+    @GetMapping("/isSend-report/{id}")
+    public ResponseEntity<Box> getIsSendReport(@PathVariable Long id){
+        Box box = iBoxService.isSendBox(id);
+        return ResponseEntity.ok().body(box);
+    }
     @GetMapping("/pageAll/{companyId}&{page}&{size}")
     public ResponseEntity<PageBox> getPageBoxByCompany(@PathVariable Long companyId, @PathVariable int page, @PathVariable int size){
         PageBox pageBox = iBoxService.getPageBoxByCompany(companyId,page, size);
@@ -51,5 +56,12 @@ public class BoxController {
         String uploadImages = iBoxService.boxUploadImages(file1,file2,id);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(uploadImages);
+    }
+    @PostMapping("/upload-report")
+    public ResponseEntity<String> boxUploadReport(@RequestParam("file") MultipartFile file,
+                                                  @RequestParam("id") Long id) throws Exception {
+        String uploadReport = iBoxService.boxUploadReport(file,id);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(uploadReport);
     }
 }

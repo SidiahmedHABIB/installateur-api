@@ -1,6 +1,7 @@
 package com.app.Installateur_API.service.classes;
 
 
+import com.app.Installateur_API.entity.Box;
 import com.app.Installateur_API.entity.Report;
 import com.app.Installateur_API.repository.ReportRepository;
 import com.app.Installateur_API.service.interfaces.IReportService;
@@ -18,7 +19,7 @@ public class ReportServiceImp implements IReportService {
     @Autowired
     ReportRepository reportRepository;
     @Override
-    public String uploadReport(MultipartFile file) throws Exception {
+    public Report uploadReport(MultipartFile file) throws Exception {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         try {
             if(fileName.contains("..")) {
@@ -32,7 +33,7 @@ public class ReportServiceImp implements IReportService {
                     .creatAt(new Date())
                     .updateAt(new Date())
                     .build());
-            return "file uploaded successfully : " + report.getName();
+            return report;
 
         } catch (Exception e) {
             throw new Exception("Could not save File: " + fileName);

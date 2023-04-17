@@ -97,6 +97,9 @@ public class InstallateurApiApplication {
 				newBox.setUpdateAt(new Date());
 				iBoxService.creatNewBox(newBox);
 			});*/
+            /*Box box = iBoxService.getBoxById(2L);
+            box.setIsSend(false);
+            iBoxService.upadateBox(box);*/
 			System.out.println("**********Box***********");
 			System.out.println("**********Intervention***********");
 			/*Stream.of("sqfdaea dqsd dhjjhd kjlqj ldjoiajei djnd osiha  spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning").forEach(comment->{

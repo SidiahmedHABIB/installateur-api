@@ -13,8 +13,11 @@ public interface IBoxService {
     public PageBox getPageBoxByStatusAndCompany(String status,Long companyId, int page, int size);
     public PageBox getPageBoxByCompany(Long companyId, int page, int size);
     public String boxUploadImages(MultipartFile file1, MultipartFile file2, Long id)throws IOException;
+    public String boxUploadReport(MultipartFile file, Long id) throws Exception;
     public Box getBoxById(Long id);
     public PageImage getBoxImages(Long id);
     public void deleteBox(Long id);
-    public Box modifyBox(Box box);
+    public Box upadateBox(Box box);
+    public Box installBox(Box box);
+    public Box isSendBox(Long id);
 }

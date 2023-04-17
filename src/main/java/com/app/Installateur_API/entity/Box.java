@@ -27,6 +27,7 @@ public class Box {
     private String matricul;
     private String boxValue;
     private String nserie;
+    private Boolean isSend;
     private Date creatAt;
     private Date updateAt;
     @ManyToOne()

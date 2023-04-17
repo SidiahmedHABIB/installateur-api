@@ -6,6 +6,7 @@ import com.app.Installateur_API.repository.BoxRepository;
 import com.app.Installateur_API.repository.StorageRepository;
 import com.app.Installateur_API.service.interfaces.IBoxService;
 import com.app.Installateur_API.service.interfaces.ICompanyService;
+import com.app.Installateur_API.service.interfaces.IReportService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,20 +29,16 @@ public class BoxServiceImp implements IBoxService {
     ICompanyService iCompanyService;
     @Autowired
     StorageService storageService;
+    @Autowired
+    IReportService iReportService;
     @Override
     public Box creatNewBox(Box box) {
-        Box newBox = new Box();
-        newBox.setName(box.getName());
-        newBox.setEntity(box.getEntity());
-        newBox.setMatricul(box.getMatricul());
-        newBox.setStatus("NOTINSTALLED");
-        newBox.setBoxValue(box.getBoxValue());
-        newBox.setNserie(box.getNserie());
-        newBox.setCompanyBox(box.getCompanyBox());
-        newBox.setReportBox(null);
-        newBox.setCreatAt(new Date());
-        newBox.setUpdateAt(new Date());
-        return boxRepository.save(newBox);
+        box.setStatus("NOTINSTALLED");
+        box.setIsSend(false);
+        box.setReportBox(null);
+        box.setCreatAt(new Date());
+        box.setUpdateAt(new Date());
+        return boxRepository.save(box);
     }
 
     @Override
@@ -74,7 +71,19 @@ public class BoxServiceImp implements IBoxService {
         Box box = getBoxById(id);
         ImageData image1 = storageService.boxUploadImage(file1,box);
         ImageData image2 = storageService.boxUploadImage(file2,box);
-        if (image1 != null&&image1 != null) {
+        if (image1 != null&&image2 != null) {
+            return "success";
+        }
+        return null;
+    }
+
+    @Override
+    public String boxUploadReport(MultipartFile file, Long id) throws Exception {
+        Box box = getBoxById(id);
+        Report report = iReportService.uploadReport(file);
+        if (report != null) {
+            box.setReportBox(report);
+            upadateBox(box);
             return "success";
         }
         return null;
@@ -101,18 +110,21 @@ public class BoxServiceImp implements IBoxService {
     }
 
     @Override
-    public Box modifyBox(Box box) {
-        Box newBox = new Box();
-        newBox.setId(box.getId());
-        newBox.setEntity(box.getEntity());
-        newBox.setMatricul(box.getMatricul());
-        newBox.setStatus("INSTALLED");
-        newBox.setBoxValue(box.getBoxValue());
-        newBox.setNserie(box.getNserie());
-        newBox.setCompanyBox(box.getCompanyBox());
-        newBox.setReportBox(box.getReportBox());
-        newBox.setCreatAt(box.getCreatAt());
-        newBox.setUpdateAt(new Date());
-        return boxRepository.save(newBox);
+    public Box upadateBox(Box box) {
+        box.setUpdateAt(new Date());
+        return boxRepository.save(box);
+    }
+    @Override
+    public Box installBox(Box box) {
+        box.setStatus("INSTALLED");
+        box.setUpdateAt(new Date());
+        return boxRepository.save(box);
+    }
+    @Override
+    public Box isSendBox(Long id) {
+        Box box = getBoxById(id);
+        box.setIsSend(true);
+        box.setUpdateAt(new Date());
+        return boxRepository.save(box);
     }
 }
