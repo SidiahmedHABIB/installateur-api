@@ -42,7 +42,7 @@ public class AdminServiceImp implements IAdminService {
     }
 
     @Override
-    public Admin modifyAdmin(Admin admin) {
+    public Admin updateAdmin(Admin admin) {
         Admin AdminUpdate = new Admin();
         AdminUpdate.setId(admin.getId());
         AdminUpdate.setFirstName(admin.getFirstName());
@@ -51,5 +51,10 @@ public class AdminServiceImp implements IAdminService {
         AdminUpdate.setPassword(admin.getPassword());
         AdminUpdate.setUpdateAt(new Date());
         return adminRepository.save(AdminUpdate);
+    }
+
+    @Override
+    public Admin loginAdmin(String email, String password) {
+        return adminRepository.findByEmailAndPassword(email, password).get();
     }
 }

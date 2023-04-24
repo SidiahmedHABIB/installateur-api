@@ -26,6 +26,11 @@ public class InterventionController {
         PageIntervention pageIntervention = iInterventionService.getPageIntervention(status,page, size);
         return ResponseEntity.ok().body(pageIntervention);
     }
+    @GetMapping("/pageInterByUser/{uId}&{page}&{size}")
+    public ResponseEntity<PageIntervention> getPageAllInterByUser(@PathVariable Long uId,@PathVariable int page, @PathVariable int size){
+        PageIntervention pageIntervention = iInterventionService.getPageAllInterByUser(uId,page, size);
+        return ResponseEntity.ok().body(pageIntervention);
+    }
     @GetMapping("/id/{id}")
     public ResponseEntity<Intervention> getInterByid(@PathVariable Long id){
         Intervention intervention =  iInterventionService.getInterventionById(id);
@@ -36,5 +41,10 @@ public class InterventionController {
         Intervention intervention = iInterventionService.addAppointment(uId,interId,datetime);
         return ResponseEntity.ok().body(intervention);
         //return new ResponseEntity<>(user, HttpStatus.CREATED);
+    }
+    @PostMapping("/plannedIntervention/")
+    public ResponseEntity<Intervention> plannedIntervention(@RequestBody Intervention intervention){
+        Intervention inter = iInterventionService.modifyIntervention(intervention);
+        return ResponseEntity.ok().body(inter);
     }
 }

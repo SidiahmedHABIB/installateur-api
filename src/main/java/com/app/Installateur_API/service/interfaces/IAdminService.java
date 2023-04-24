@@ -10,8 +10,8 @@ public interface IAdminService {
     public Admin getAdminById(Long id);
     public Admin getAdminByEmail(String email);
     public void deletAdmin(Long id);
-    public Admin modifyAdmin(Admin admin);
-
+    public Admin updateAdmin(Admin admin);
+    Admin loginAdmin(String email,String password);
 
 
 }

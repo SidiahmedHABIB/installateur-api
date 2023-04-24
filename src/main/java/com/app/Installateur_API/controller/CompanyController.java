@@ -1,13 +1,11 @@
 package com.app.Installateur_API.controller;
 
-
 import com.app.Installateur_API.entity.Company;
+import com.app.Installateur_API.entity.PageCompany;
 import com.app.Installateur_API.service.interfaces.ICompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,5 +18,20 @@ public class CompanyController {
     public ResponseEntity<List<Company>> getAllCompany(){
         List<Company> company = iCompanyService.getAllCompany();
         return ResponseEntity.ok().body(company);
+    }
+    @GetMapping("/allPage/{page}&{size}")
+    public ResponseEntity<PageCompany> getPageAllCompanies(@PathVariable int page, @PathVariable int size){
+        PageCompany companier = iCompanyService.getPageAllCompanier(page,size);
+        return ResponseEntity.ok().body(companier);
+    }
+    @PostMapping("/add/")
+    public ResponseEntity<Company> creatNewCompany(@RequestBody Company company){
+        Company companySaved = iCompanyService.creatNewCompany(company);
+        return ResponseEntity.ok().body(companySaved);
+    }
+    @PostMapping("/update/")
+    public ResponseEntity<Company> updateCompany(@RequestBody Company company){
+        Company companyUpdated = iCompanyService.modifyCompany(company);
+        return ResponseEntity.ok().body(companyUpdated);
     }
 }

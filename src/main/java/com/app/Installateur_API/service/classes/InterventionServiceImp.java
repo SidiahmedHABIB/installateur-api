@@ -49,6 +49,17 @@ public class InterventionServiceImp implements IInterventionService {
     }
 
     @Override
+    public PageIntervention getPageAllInterByUser(Long uId, int page, int size) {
+        User user = iUserService.getUserById(uId);
+        PageIntervention p= new PageIntervention();
+        Page<Intervention> interventionPage = interventionRepository.findByUser(user,PageRequest.of(page, size));
+        p.setInterventions(interventionPage.getContent());
+        p.setTotalPages(interventionPage.getTotalPages());
+        return p;
+    }
+
+
+    @Override
     public Intervention getInterventionById(Long id) {
         return interventionRepository.findById(id).get();
     }
@@ -60,7 +71,7 @@ public class InterventionServiceImp implements IInterventionService {
 
     @Override
     public Intervention modifyIntervention(Intervention intervention) {
-        return null;
+        return interventionRepository.save(intervention);
     }
 
     @Override

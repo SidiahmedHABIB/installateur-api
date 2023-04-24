@@ -1,6 +1,7 @@
 package com.app.Installateur_API.controller;
 
 
+import com.app.Installateur_API.entity.PageUser;
 import com.app.Installateur_API.entity.User;
 import com.app.Installateur_API.service.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +20,20 @@ public class UserController {
     @Autowired
     private IUserService iUserService;
 
-    @GetMapping("/all")
-    public ResponseEntity<List<User>> getAllUsers(){
-        List<User> users = iUserService.getAllUser();
+    @GetMapping("/all/{page}&{size}")
+    public ResponseEntity<PageUser> getPageAllUser(@PathVariable int page, @PathVariable int size){
+        PageUser users = iUserService.getPageAllUser(page,size);
         return ResponseEntity.ok().body(users);
     }
-    @PostMapping("/")
+
+    @PostMapping("/add/")
     public ResponseEntity<User> creatNewUser(@RequestBody User user){
         User userSaved = iUserService.creatNewUser(user);
+        return ResponseEntity.ok().body(userSaved);
+    }
+    @PostMapping("/updateUser/")
+    public ResponseEntity<User> updateUser(@RequestBody User user){
+        User userSaved = iUserService.modifyUser(user);
         return ResponseEntity.ok().body(userSaved);
     }
     @PostMapping("/login/")
@@ -45,6 +52,11 @@ public class UserController {
     public ResponseEntity<User> getUserById(@PathVariable Long id){
         User users = iUserService.getUserById(id);
         return ResponseEntity.ok().body(users);
+    }
+    @GetMapping("/delete/{id}")
+    public ResponseEntity<Boolean> deletUserById(@PathVariable Long id){
+        iUserService.deleteUser(id);
+        return ResponseEntity.ok().body(true);
     }
 
 

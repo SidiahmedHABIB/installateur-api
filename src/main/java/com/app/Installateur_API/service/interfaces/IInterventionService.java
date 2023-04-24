@@ -11,6 +11,7 @@ public interface IInterventionService {
     public Intervention creatNewIntervention(Intervention intervention);
     public List<Intervention> getAllIntervention();
     public PageIntervention getPageIntervention(String status,int page, int size);
+    public PageIntervention getPageAllInterByUser(Long uId,int page, int size);
     public Intervention getInterventionById(Long id);
     public void deleteIntervention(Long id);
     public Intervention modifyIntervention(Intervention intervention);

@@ -1,11 +1,12 @@
 package com.app.Installateur_API.service.classes;
 
-import com.app.Installateur_API.entity.ImageData;
-import com.app.Installateur_API.entity.User;
+import com.app.Installateur_API.entity.*;
 import com.app.Installateur_API.repository.UserRepository;
 import com.app.Installateur_API.service.interfaces.IUserService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,14 +25,18 @@ public class UserServiceImp implements IUserService {
     public User creatNewUser(User user) {
         return userRepository.save(user);
 
-
-
     }
 
     @Override
-    public List<User> getAllUser() {
-        return userRepository.findAll();
+    public PageUser getPageAllUser(int page, int size) {
+        PageUser p= new PageUser();
+        Page<User> userPage = userRepository.findAll(PageRequest.of(page, size));
+        p.setUsers(userPage.getContent());
+        p.setTotalPages(userPage.getTotalPages());
+        return p;
     }
+
+
 
     @Override
     public User getUserById(Long id) {
@@ -50,16 +55,8 @@ public class UserServiceImp implements IUserService {
 
     @Override
     public User modifyUser(User user) {
-        User userUpdate = new User();
-        userUpdate.setId(user.getId());
-        userUpdate.setFirstName(user.getFirstName());
-        userUpdate.setLastName(user.getLastName());
-        userUpdate.setEmail(user.getEmail());
-        userUpdate.setPassword(user.getPassword());
-        userUpdate.setImageUser(user.getImageUser());
-        userUpdate.setCreatAt(user.getCreatAt());
-        userUpdate.setUpdateAt(new Date());
-        return userRepository.save(userUpdate);
+        user.setUpdateAt(new Date());
+        return userRepository.save(user);
     }
 
     @Override

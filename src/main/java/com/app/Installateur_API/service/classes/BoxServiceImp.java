@@ -66,6 +66,8 @@ public class BoxServiceImp implements IBoxService {
         return pb;
     }
 
+
+
     @Override
     public String boxUploadImages(MultipartFile file1, MultipartFile file2, Long id)throws IOException {
         Box box = getBoxById(id);
