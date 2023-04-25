@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.List;
 
 public interface IBoxService {
-    public Box creatNewBox(Box box);
+    public Box creatNewBox(Box box,Long id);
     public List<Box> getAllBox();
     public PageBox getPageBoxByStatusAndCompany(String status,Long companyId, int page, int size);
     public PageBox getPageBoxByCompany(Long companyId, int page, int size);
@@ -17,7 +17,7 @@ public interface IBoxService {
     public Box getBoxById(Long id);
     public PageImage getBoxImages(Long id);
     public void deleteBox(Long id);
-    public Box upadateBox(Box box);
+    public Box upadateBox(Box box,Long id);
     public Box installBox(Box box);
     public Box isSendBox(Long id);
 }

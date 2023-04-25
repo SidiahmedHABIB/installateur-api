@@ -97,7 +97,7 @@ public class InstallateurApiApplication {
 			});*/
 			System.out.println("**********Company***********");
 			System.out.println("**********Box***********");
-			Company company = iCompanyService.getCompanyById(3L);
+			//Company company = iCompanyService.getCompanyById(3L);
 			//Report report = reportRepository.findById(1L).get();
 			/*Stream.of("qq-dd-ff","sd-dd-ff","gg-ee-cc","zz-dd-ff","ge-dd-ff").forEach(entity->{
 				Box newBox = new Box();

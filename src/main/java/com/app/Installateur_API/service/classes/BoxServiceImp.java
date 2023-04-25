@@ -32,10 +32,9 @@ public class BoxServiceImp implements IBoxService {
     @Autowired
     IReportService iReportService;
     @Override
-    public Box creatNewBox(Box box) {
-        box.setStatus("NOTINSTALLED");
-        box.setIsSend(false);
-        box.setReportBox(null);
+    public Box creatNewBox(Box box,Long companyId) {
+        Company company = iCompanyService.getCompanyById(companyId);
+        box.setCompanyBox(company);
         box.setCreatAt(new Date());
         box.setUpdateAt(new Date());
         return boxRepository.save(box);
@@ -85,10 +84,15 @@ public class BoxServiceImp implements IBoxService {
         Report report = iReportService.uploadReport(file);
         if (report != null) {
             box.setReportBox(report);
-            upadateBox(box);
+            upadateBoxforReport(box);
             return "success";
         }
         return null;
+    }
+
+    private void upadateBoxforReport(Box box) {
+        box.setUpdateAt(new Date());
+        boxRepository.save(box);
     }
 
     @Override
@@ -108,11 +112,14 @@ public class BoxServiceImp implements IBoxService {
 
     @Override
     public void deleteBox(Long id) {
+        boxRepository.deleteById(id);
 
     }
 
     @Override
-    public Box upadateBox(Box box) {
+    public Box upadateBox(Box box,Long companyId) {
+        Company company = iCompanyService.getCompanyById(companyId);
+        box.setCompanyBox(company);
         box.setUpdateAt(new Date());
         return boxRepository.save(box);
     }

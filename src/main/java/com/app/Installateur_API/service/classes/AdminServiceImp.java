@@ -3,10 +3,15 @@ package com.app.Installateur_API.service.classes;
 
 
 import com.app.Installateur_API.entity.Admin;
+import com.app.Installateur_API.entity.PageAdmin;
+import com.app.Installateur_API.entity.PageUser;
+import com.app.Installateur_API.entity.User;
 import com.app.Installateur_API.repository.AdminRepository;
 import com.app.Installateur_API.service.interfaces.IAdminService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -27,6 +32,15 @@ public class AdminServiceImp implements IAdminService {
     }
 
     @Override
+    public PageAdmin getAllPageAdmin(int page, int size) {
+        PageAdmin p2= new PageAdmin();
+        Page<Admin> adminPage = adminRepository.findAll(PageRequest.of(page, size));
+        p2.setAdmins(adminPage.getContent());
+        p2.setTotalPages(adminPage.getTotalPages());
+        return  p2;
+    }
+
+    @Override
     public Admin getAdminById(Long id) {
         return adminRepository.findById(id).get();
     }
@@ -43,14 +57,8 @@ public class AdminServiceImp implements IAdminService {
 
     @Override
     public Admin updateAdmin(Admin admin) {
-        Admin AdminUpdate = new Admin();
-        AdminUpdate.setId(admin.getId());
-        AdminUpdate.setFirstName(admin.getFirstName());
-        AdminUpdate.setLastName(admin.getLastName());
-        AdminUpdate.setEmail(admin.getEmail());
-        AdminUpdate.setPassword(admin.getPassword());
-        AdminUpdate.setUpdateAt(new Date());
-        return adminRepository.save(AdminUpdate);
+        admin.setUpdateAt(new Date());
+        return adminRepository.save(admin);
     }
 
     @Override

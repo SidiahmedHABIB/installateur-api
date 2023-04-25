@@ -1,9 +1,11 @@
 package com.app.Installateur_API.service.classes;
 
+import com.app.Installateur_API.entity.Company;
 import com.app.Installateur_API.entity.Intervention;
 import com.app.Installateur_API.entity.PageIntervention;
 import com.app.Installateur_API.entity.User;
 import com.app.Installateur_API.repository.InterventionRepository;
+import com.app.Installateur_API.service.interfaces.ICompanyService;
 import com.app.Installateur_API.service.interfaces.IInterventionService;
 import com.app.Installateur_API.service.interfaces.IUserService;
 import jakarta.transaction.Transactional;
@@ -21,17 +23,16 @@ public class InterventionServiceImp implements IInterventionService {
     private InterventionRepository interventionRepository;
     @Autowired
     private IUserService iUserService;
+    @Autowired
+    private ICompanyService iCompanyService;
     @Override
-    public Intervention creatNewIntervention(Intervention intervention) {
-        Intervention newIntervention = new Intervention();
-        newIntervention.setComment(intervention.getComment());
-        newIntervention.setStatus("TOPLAN");
-        newIntervention.setAppointmentAt(null);
-        newIntervention.setUser(null);
-        newIntervention.setCompany(intervention.getCompany());
-        newIntervention.setCreatAt(new Date());
-        newIntervention.setUpdateAt(new Date());
-        return interventionRepository.save(newIntervention);
+    public Intervention creatNewIntervention(Intervention intervention,Long id) {
+        Company company = iCompanyService.getCompanyById(id);
+        intervention.setCompany(company);
+        intervention.setStatus("TOPLAN");
+        intervention.setCreatAt(new Date());
+        intervention.setUpdateAt(new Date());
+        return interventionRepository.save(intervention);
     }
 
     @Override
@@ -49,10 +50,30 @@ public class InterventionServiceImp implements IInterventionService {
     }
 
     @Override
+    public PageIntervention getPageInterPlannedByUser(Long uId, String status, int page, int size) {
+        User user = iUserService.getUserById(uId);
+        PageIntervention p= new PageIntervention();
+        Page<Intervention> interventionPage = interventionRepository.findByUserAndStatus(user,status,PageRequest.of(page, size));
+        p.setInterventions(interventionPage.getContent());
+        p.setTotalPages(interventionPage.getTotalPages());
+        return p;
+    }
+
+    @Override
     public PageIntervention getPageAllInterByUser(Long uId, int page, int size) {
         User user = iUserService.getUserById(uId);
         PageIntervention p= new PageIntervention();
         Page<Intervention> interventionPage = interventionRepository.findByUser(user,PageRequest.of(page, size));
+        p.setInterventions(interventionPage.getContent());
+        p.setTotalPages(interventionPage.getTotalPages());
+        return p;
+    }
+
+    @Override
+    public PageIntervention getPageAllInterByCompany(Long companyId, int page, int size) {
+        Company company = iCompanyService.getCompanyById(companyId);
+        PageIntervention p= new PageIntervention();
+        Page<Intervention> interventionPage = interventionRepository.findByCompany(company,PageRequest.of(page, size));
         p.setInterventions(interventionPage.getContent());
         p.setTotalPages(interventionPage.getTotalPages());
         return p;
@@ -70,7 +91,16 @@ public class InterventionServiceImp implements IInterventionService {
     }
 
     @Override
+    public Intervention upadateIntervention(Intervention intervention, Long id) {
+        Company company = iCompanyService.getCompanyById(id);
+        intervention.setCompany(company);
+        intervention.setUpdateAt(new Date());
+        return interventionRepository.save(intervention);
+    }
+
+    @Override
     public Intervention modifyIntervention(Intervention intervention) {
+        intervention.setUpdateAt(new Date());
         return interventionRepository.save(intervention);
     }
 

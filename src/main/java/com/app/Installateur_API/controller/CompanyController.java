@@ -34,4 +34,14 @@ public class CompanyController {
         Company companyUpdated = iCompanyService.modifyCompany(company);
         return ResponseEntity.ok().body(companyUpdated);
     }
+    @GetMapping("/delete/{id}")
+    public ResponseEntity<Boolean> deleteCompanyById(@PathVariable Long id){
+        iCompanyService.deleteCompany(id);
+        return ResponseEntity.ok().body(true);
+    }
+    @GetMapping("/id/{id}")
+    public ResponseEntity<Company> getCompanyById(@PathVariable Long id){
+        Company company = iCompanyService.getCompanyById(id);
+        return ResponseEntity.ok().body(company);
+    }
 }

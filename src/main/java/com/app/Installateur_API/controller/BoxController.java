@@ -1,9 +1,6 @@
 package com.app.Installateur_API.controller;
 
-import com.app.Installateur_API.entity.Box;
-import com.app.Installateur_API.entity.ImageData;
-import com.app.Installateur_API.entity.PageBox;
-import com.app.Installateur_API.entity.PageImage;
+import com.app.Installateur_API.entity.*;
 import com.app.Installateur_API.service.interfaces.IBoxService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -64,5 +61,20 @@ public class BoxController {
         String uploadReport = iBoxService.boxUploadReport(file,id);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(uploadReport);
+    }
+    @PutMapping("/add/{id}")
+    public ResponseEntity<Box> creatNewBox(@PathVariable Long id,@RequestBody  Box box){
+        Box boxsaved = iBoxService.creatNewBox(box,id);
+        return ResponseEntity.ok().body(boxsaved);
+    }
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Box> updateBox(@PathVariable Long id,@RequestBody  Box box){
+        Box boxUpdated = iBoxService.upadateBox(box,id);
+        return ResponseEntity.ok().body(boxUpdated);
+    }
+    @GetMapping("/delete/{id}")
+    public ResponseEntity<Boolean> deleteBoxById(@PathVariable Long id){
+        iBoxService.deleteBox(id);
+        return ResponseEntity.ok().body(true);
     }
 }
