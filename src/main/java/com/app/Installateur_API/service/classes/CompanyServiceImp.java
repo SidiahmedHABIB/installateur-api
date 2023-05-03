@@ -3,9 +3,7 @@ package com.app.Installateur_API.service.classes;
 
 
 import com.app.Installateur_API.entity.Company;
-import com.app.Installateur_API.entity.PageCompany;
-import com.app.Installateur_API.entity.PageUser;
-import com.app.Installateur_API.entity.User;
+import com.app.Installateur_API.entity.page.PageCompany;
 import com.app.Installateur_API.repository.CompanyRepository;
 import com.app.Installateur_API.service.interfaces.ICompanyService;
 import jakarta.transaction.Transactional;

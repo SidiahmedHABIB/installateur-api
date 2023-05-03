@@ -3,15 +3,14 @@ package com.app.Installateur_API.service.classes;
 
 
 import com.app.Installateur_API.entity.Admin;
-import com.app.Installateur_API.entity.PageAdmin;
-import com.app.Installateur_API.entity.PageUser;
-import com.app.Installateur_API.entity.User;
+import com.app.Installateur_API.entity.page.PageAdmin;
 import com.app.Installateur_API.repository.AdminRepository;
 import com.app.Installateur_API.service.interfaces.IAdminService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -64,5 +63,9 @@ public class AdminServiceImp implements IAdminService {
     @Override
     public Admin loginAdmin(String email, String password) {
         return adminRepository.findByEmailAndPassword(email, password).get();
+    }
+    @Scheduled(fixedDelay = 1000 * 1) // Run every 5 minutes
+    void prinInfo(){
+        System.out.println("print info method ");
     }
 }

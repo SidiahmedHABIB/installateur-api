@@ -1,8 +1,7 @@
 package com.app.Installateur_API.service.interfaces;
 
 import com.app.Installateur_API.entity.Company;
-import com.app.Installateur_API.entity.PageCompany;
-import com.app.Installateur_API.entity.PageUser;
+import com.app.Installateur_API.entity.page.PageCompany;
 
 import java.util.List;
 

@@ -1,15 +1,15 @@
-package com.app.Installateur_API.entity;
+package com.app.Installateur_API.entity.page;
 
+import com.app.Installateur_API.entity.Box;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.util.List;
-
 @ToString
 @NoArgsConstructor
 @Data
-public class PageImage {
-    private List<ImageData> images;
+public class PageBox {
+    private List<Box> boxes;
     private int totalPages;
 }

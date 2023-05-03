@@ -2,6 +2,8 @@ package com.app.Installateur_API.service.classes;
 
 
 import com.app.Installateur_API.entity.*;
+import com.app.Installateur_API.entity.page.PageBox;
+import com.app.Installateur_API.entity.page.PageImage;
 import com.app.Installateur_API.repository.BoxRepository;
 import com.app.Installateur_API.repository.StorageRepository;
 import com.app.Installateur_API.service.interfaces.IBoxService;
@@ -129,6 +131,12 @@ public class BoxServiceImp implements IBoxService {
         box.setUpdateAt(new Date());
         return boxRepository.save(box);
     }
+
+    @Override
+    public Box modifyBox(Box box) {
+        return boxRepository.save(box);
+    }
+
     @Override
     public Box isSendBox(Long id) {
         Box box = getBoxById(id);

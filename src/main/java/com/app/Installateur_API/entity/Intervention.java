@@ -17,7 +17,7 @@ public class Intervention {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String comment;
-    private String appointmentAt;
+    private Date appointmentAt;
     private String status;
     private Date creatAt;
     private Date updateAt;

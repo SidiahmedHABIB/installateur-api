@@ -35,7 +35,7 @@ public class Box {
     @OneToMany(mappedBy = "box",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<ImageData> boxImages = new ArrayList<>();
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private Report reportBox;
 
 }

@@ -1,7 +1,7 @@
 package com.app.Installateur_API.service.interfaces;
 
 import com.app.Installateur_API.entity.Admin;
-import com.app.Installateur_API.entity.PageAdmin;
+import com.app.Installateur_API.entity.page.PageAdmin;
 
 import java.util.List;
 

@@ -1,10 +1,8 @@
 package com.app.Installateur_API.service.interfaces;
 
 import com.app.Installateur_API.entity.Notice;
-import com.app.Installateur_API.entity.PageNotice;
+import com.app.Installateur_API.entity.page.PageNotice;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 public interface INoticeService {
     public String uploadNotice(MultipartFile file) throws Exception;

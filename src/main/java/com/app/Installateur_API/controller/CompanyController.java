@@ -1,7 +1,7 @@
 package com.app.Installateur_API.controller;
 
 import com.app.Installateur_API.entity.Company;
-import com.app.Installateur_API.entity.PageCompany;
+import com.app.Installateur_API.entity.page.PageCompany;
 import com.app.Installateur_API.service.interfaces.ICompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

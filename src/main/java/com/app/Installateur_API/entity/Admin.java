@@ -1,14 +1,12 @@
 package com.app.Installateur_API.entity;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -25,4 +23,7 @@ public class Admin {
     private String password;
     private Date creatAt;
     private Date updateAt;
+
 }
+
+

@@ -1,17 +1,15 @@
 package com.app.Installateur_API.controller;
 
 
-import com.app.Installateur_API.entity.PageUser;
+import com.app.Installateur_API.entity.page.PageUser;
 import com.app.Installateur_API.entity.User;
 import com.app.Installateur_API.service.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 @RestController

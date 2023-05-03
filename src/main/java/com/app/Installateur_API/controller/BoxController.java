@@ -1,13 +1,13 @@
 package com.app.Installateur_API.controller;
-
 import com.app.Installateur_API.entity.*;
+import com.app.Installateur_API.entity.page.PageBox;
+import com.app.Installateur_API.entity.page.PageImage;
 import com.app.Installateur_API.service.interfaces.IBoxService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -62,6 +62,7 @@ public class BoxController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(uploadReport);
     }
+
     @PutMapping("/add/{id}")
     public ResponseEntity<Box> creatNewBox(@PathVariable Long id,@RequestBody  Box box){
         Box boxsaved = iBoxService.creatNewBox(box,id);
@@ -77,4 +78,15 @@ public class BoxController {
         iBoxService.deleteBox(id);
         return ResponseEntity.ok().body(true);
     }
+    @PostMapping("/addboxInfo/")
+    public ResponseEntity<Box> addboxInfobox(@RequestBody Box box){
+        Box boxUpdated= iBoxService.modifyBox(box);
+        return ResponseEntity.ok().body(boxUpdated);
+    }
+    @PostMapping("/installBox/")
+    public ResponseEntity<Box> installbox(@RequestBody Box box){
+        Box boxUpdated= iBoxService.installBox(box);
+        return ResponseEntity.ok().body(boxUpdated);
+    }
+
 }

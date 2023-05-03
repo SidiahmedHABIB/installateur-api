@@ -2,7 +2,7 @@ package com.app.Installateur_API.service.classes;
 
 import com.app.Installateur_API.entity.Company;
 import com.app.Installateur_API.entity.Intervention;
-import com.app.Installateur_API.entity.PageIntervention;
+import com.app.Installateur_API.entity.page.PageIntervention;
 import com.app.Installateur_API.entity.User;
 import com.app.Installateur_API.repository.InterventionRepository;
 import com.app.Installateur_API.service.interfaces.ICompanyService;
@@ -70,6 +70,16 @@ public class InterventionServiceImp implements IInterventionService {
     }
 
     @Override
+    public List<Intervention> getAllInterByUser(Long uId) {
+        User user = iUserService.getUserById(uId);
+        PageIntervention p= new PageIntervention();
+        Page<Intervention> interventionPage = interventionRepository.findByUser(user,PageRequest.of(0, 10));
+        p.setInterventions(interventionPage.getContent());
+        p.setTotalPages(interventionPage.getTotalPages());
+        return p.getInterventions();
+    }
+
+    @Override
     public PageIntervention getPageAllInterByCompany(Long companyId, int page, int size) {
         Company company = iCompanyService.getCompanyById(companyId);
         PageIntervention p= new PageIntervention();
@@ -105,12 +115,12 @@ public class InterventionServiceImp implements IInterventionService {
     }
 
     @Override
-    public Intervention addAppointment(Long uId, Long interId, String datetime) {
+    public Intervention addAppointment(Long uId, Long interId) {
         User user = iUserService.getUserById(uId);
         Intervention intervention = getInterventionById(interId);
         intervention.setUser(user);
         intervention.setStatus("ONHOLD");
-        intervention.setAppointmentAt(datetime);
+        intervention.setAppointmentAt(new Date());
         intervention.setUpdateAt(new Date());
         return interventionRepository.save(intervention);
     }

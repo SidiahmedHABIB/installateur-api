@@ -1,8 +1,7 @@
 package com.app.Installateur_API.controller;
 
 import com.app.Installateur_API.entity.Notice;
-import com.app.Installateur_API.entity.PageNotice;
-import com.app.Installateur_API.entity.User;
+import com.app.Installateur_API.entity.page.PageNotice;
 import com.app.Installateur_API.service.interfaces.INoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -11,8 +10,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/notice")

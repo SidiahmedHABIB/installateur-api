@@ -1,8 +1,6 @@
 package com.app.Installateur_API.service.classes;
-import com.app.Installateur_API.entity.Intervention;
 import com.app.Installateur_API.entity.Notice;
-import com.app.Installateur_API.entity.PageIntervention;
-import com.app.Installateur_API.entity.PageNotice;
+import com.app.Installateur_API.entity.page.PageNotice;
 import com.app.Installateur_API.repository.NoticeRepository;
 import com.app.Installateur_API.service.interfaces.INoticeService;
 import jakarta.transaction.Transactional;
@@ -14,7 +12,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 @Service

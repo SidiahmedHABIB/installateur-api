@@ -26,7 +26,7 @@ public class User {
     private String password;
     private Date creatAt;
     private Date updateAt;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private ImageData imageUser;
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

@@ -1,6 +1,7 @@
 package com.app.Installateur_API.service.classes;
 
 import com.app.Installateur_API.entity.*;
+import com.app.Installateur_API.entity.page.PageUser;
 import com.app.Installateur_API.repository.UserRepository;
 import com.app.Installateur_API.service.interfaces.IUserService;
 import jakarta.transaction.Transactional;
@@ -12,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Date;
-import java.util.List;
+
 @Service
 @Transactional
 public class UserServiceImp implements IUserService {

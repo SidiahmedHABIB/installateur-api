@@ -1,11 +1,10 @@
 package com.app.Installateur_API.service.interfaces;
 
-import com.app.Installateur_API.entity.PageUser;
+import com.app.Installateur_API.entity.page.PageUser;
 import com.app.Installateur_API.entity.User;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
 
 public interface IUserService {
     public User creatNewUser(User user);
