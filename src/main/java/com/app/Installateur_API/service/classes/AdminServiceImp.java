@@ -3,6 +3,9 @@ package com.app.Installateur_API.service.classes;
 
 
 import com.app.Installateur_API.entity.Admin;
+import com.app.Installateur_API.entity.LoginResponse;
+import com.app.Installateur_API.entity.LoginResponseAdmin;
+import com.app.Installateur_API.entity.User;
 import com.app.Installateur_API.entity.page.PageAdmin;
 import com.app.Installateur_API.repository.AdminRepository;
 import com.app.Installateur_API.service.interfaces.IAdminService;
@@ -61,8 +64,14 @@ public class AdminServiceImp implements IAdminService {
     }
 
     @Override
-    public Admin loginAdmin(String email, String password) {
-        return adminRepository.findByEmailAndPassword(email, password).get();
+    public LoginResponseAdmin loginAdmin(String email, String password) {
+        Admin admin = adminRepository.findByEmailAndPassword(email,password).orElse(null);
+        if(admin!=null){
+            return new LoginResponseAdmin("true",admin);
+        }
+        else {
+            return new LoginResponseAdmin("false",admin);
+        }
     }
     @Scheduled(fixedDelay = 1000 * 1) // Run every 5 minutes
     void prinInfo(){

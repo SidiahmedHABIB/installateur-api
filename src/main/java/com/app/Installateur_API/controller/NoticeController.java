@@ -28,7 +28,7 @@ public class NoticeController {
                 .body(uploadNotice);
     }
 
-    @GetMapping("/download/{fileName}")
+   /*@GetMapping("/download/{fileName}")
     public ResponseEntity<byte[]> downloadNotice(@PathVariable String fileName){
         Notice noticeData=iNoticeService.downloadNotice(fileName);
         return ResponseEntity.ok()
@@ -37,5 +37,14 @@ public class NoticeController {
                 "attachment; filename=\"" + noticeData.getName()
                         + "\"").body(noticeData.getNoticeData());
 
-    }
+    }*/
+   @GetMapping("/download/{fileName}")
+   public ResponseEntity<byte[]> downloadNotice(@PathVariable String fileName){
+       Notice noticeData=iNoticeService.downloadNotice(fileName);
+       HttpHeaders headers = new HttpHeaders();
+       headers.setContentType(MediaType.parseMediaType(noticeData.getType()));
+       headers.setContentDispositionFormData(noticeData.getName(), noticeData.getName());
+       headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+       return new ResponseEntity<>(noticeData.getNoticeData(), headers, HttpStatus.OK);
+   }
 }

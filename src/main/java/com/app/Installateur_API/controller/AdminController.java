@@ -1,6 +1,8 @@
 package com.app.Installateur_API.controller;
 
 import com.app.Installateur_API.entity.Admin;
+import com.app.Installateur_API.entity.LoginRequest;
+import com.app.Installateur_API.entity.LoginResponseAdmin;
 import com.app.Installateur_API.entity.page.PageAdmin;
 import com.app.Installateur_API.service.interfaces.IAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +32,9 @@ public class AdminController {
     public Admin loginAdmin(@PathVariable String email, @PathVariable String pass){
         return adminService.loginAdmin(email, pass);
     }*/
-    @GetMapping("/login/{email}&{password}")
-    public ResponseEntity<Admin> loginAdmin(@PathVariable String email, @PathVariable String password){
-        Admin admin = adminService.loginAdmin(email,password);
+    @PostMapping("/login/")
+    public ResponseEntity<LoginResponseAdmin> loginAdmin(@RequestBody LoginRequest loginRequest){
+        LoginResponseAdmin admin = adminService.loginAdmin(loginRequest.getEmail(),loginRequest.getPassword());
         return ResponseEntity.ok().body(admin);
         //return new ResponseEntity<>(user, HttpStatus.CREATED);
     }

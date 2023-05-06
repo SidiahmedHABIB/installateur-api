@@ -13,6 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -37,6 +40,10 @@ public class UserServiceImp implements IUserService {
         return p;
     }
 
+    @Override
+    public List<User> getAllUser() {
+        return userRepository.findAll();
+    }
 
 
     @Override
@@ -45,8 +52,15 @@ public class UserServiceImp implements IUserService {
     }
 
     @Override
-    public User loginUser(String email,String password) {
-        return userRepository.findByEmailAndPassword(email,password).get();
+    public LoginResponse loginUser(String email, String password) {
+         User user = userRepository.findByEmailAndPassword(email,password).orElse(null);
+         if(user!=null){
+             return new LoginResponse("true",user);
+         }
+         else {
+             return new LoginResponse("false",user);
+         }
+
     }
 
     @Override

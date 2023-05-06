@@ -1,8 +1,11 @@
 package com.app.Installateur_API.controller;
 
 
+import com.app.Installateur_API.entity.LoginRequest;
+import com.app.Installateur_API.entity.LoginResponse;
 import com.app.Installateur_API.entity.page.PageUser;
 import com.app.Installateur_API.entity.User;
+import com.app.Installateur_API.repository.UserRepository;
 import com.app.Installateur_API.service.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -23,9 +27,15 @@ public class UserController {
         PageUser users = iUserService.getPageAllUser(page,size);
         return ResponseEntity.ok().body(users);
     }
+    @GetMapping("/allUsers")
+    public ResponseEntity<List<User>> getPageAllUser(){
+        List<User> users = iUserService.getAllUser();
+        return ResponseEntity.ok().body(users);
+    }
 
     @PostMapping("/add/")
     public ResponseEntity<User> creatNewUser(@RequestBody User user){
+
         User userSaved = iUserService.creatNewUser(user);
         return ResponseEntity.ok().body(userSaved);
     }
@@ -35,9 +45,9 @@ public class UserController {
         return ResponseEntity.ok().body(userSaved);
     }
     @PostMapping("/login/")
-    public ResponseEntity<Map<String,User>> loginUsers(@RequestParam("email") String email, @RequestParam("password") String password){
-        User user = iUserService.loginUser(email,password);
-        return ResponseEntity.ok().body(Map.of("user",user));
+    public ResponseEntity<LoginResponse> loginUsers(@RequestBody LoginRequest loginRequest){
+        LoginResponse user = iUserService.loginUser(loginRequest.getEmail(),loginRequest.getPassword());
+        return ResponseEntity.ok().body(user);
         //return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
     @PostMapping("/updateProfile")
