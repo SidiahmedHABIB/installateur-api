@@ -5,11 +5,10 @@ import com.app.Installateur_API.entity.Box;
 import com.app.Installateur_API.entity.ImageData;
 import com.app.Installateur_API.repository.StorageRepository;
 import com.app.Installateur_API.util.ImageUtils;
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.util.Date;
 import java.util.Optional;
@@ -54,5 +53,10 @@ public class StorageService {
         Optional<ImageData> dbImageData = repository.findByName(fileName);
         byte[] images= ImageUtils.decompressImage(dbImageData.get().getImageData());
         return images;
+    }
+
+    public boolean deleteImageByBox(Box box) {
+        repository.deleteByBox(box);
+        return repository.findByBox(box).isPresent();
     }
 }

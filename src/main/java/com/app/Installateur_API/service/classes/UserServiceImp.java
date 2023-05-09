@@ -2,20 +2,19 @@ package com.app.Installateur_API.service.classes;
 
 import com.app.Installateur_API.entity.*;
 import com.app.Installateur_API.entity.page.PageUser;
+import com.app.Installateur_API.repository.AppRoleRepository;
+import com.app.Installateur_API.repository.AppUserRepository;
 import com.app.Installateur_API.repository.UserRepository;
 import com.app.Installateur_API.service.interfaces.IUserService;
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 @Transactional
@@ -24,10 +23,28 @@ public class UserServiceImp implements IUserService {
     UserRepository userRepository;
     @Autowired
     private StorageService storageService;
+    @Autowired
+    private AppUserRepository appUserRepository;
+    @Autowired
+    private AppRoleRepository appRoleRepository;
+    @Autowired
+    PasswordEncoder encoder;
 
     @Override
-    public User creatNewUser(User user) {
-        return userRepository.save(user);
+    public String creatNewUser(User user) {
+        if(appUserRepository.existsByEmail(user.getEmail())){
+            return  "Error: email is already taken!";
+        }
+        AppRole role = appRoleRepository.findById(1l).get();
+        List<AppRole> roleList =new ArrayList<>();
+        roleList.add(role);
+        AppUser newUser = new AppUser();
+        newUser.setEmail(user.getEmail());
+        newUser.setPassword(encoder.encode(user.getPassword()));
+        newUser.setAppRoles(roleList);
+        appUserRepository.save(newUser);
+        userRepository.save(user);
+        return  "Technician registered successfully!";
 
     }
 

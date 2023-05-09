@@ -1,31 +1,47 @@
 package com.app.Installateur_API;
+import com.app.Installateur_API.security.AccountService;
+import com.app.Installateur_API.security.RsaKeyProperties;
 
-import com.app.Installateur_API.enmus.BoxStatus;
-import com.app.Installateur_API.entity.*;
 import com.app.Installateur_API.repository.ReportRepository;
 import com.app.Installateur_API.repository.StorageRepository;
 import com.app.Installateur_API.service.interfaces.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-
+import java.io.IOException;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-import java.util.Date;
-import java.util.UUID;
-import java.util.stream.Stream;
 
+@Configuration
 @SpringBootApplication
+@EnableConfigurationProperties(RsaKeyProperties.class)
 public class InstallateurApiApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(InstallateurApiApplication.class, args);
 	}
 	@Bean
+	PasswordEncoder passwordEncoder(){
+		return new BCryptPasswordEncoder();
+	}
+	@Bean
+	KeyPair keyPair() throws NoSuchAlgorithmException, IOException {
+		KeyPairGenerator keyPairGenerator=KeyPairGenerator.getInstance("RSA");
+		var keyPair=keyPairGenerator.generateKeyPair();
+		return keyPair;
+	}
+	/*@Bean
 	public CorsFilter corsFilter() {
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
 		corsConfiguration.setAllowCredentials(true);
@@ -40,6 +56,35 @@ public class InstallateurApiApplication {
 		urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
 		return new CorsFilter(urlBasedCorsConfigurationSource);
 	}
+	/*@Bean
+	public CorsFilter corsFilter() {
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		CorsConfiguration config = new CorsConfiguration();
+		config.setAllowCredentials(true);
+		config.addAllowedOrigin("http://localhost:4200");
+		config.addAllowedHeader("*");
+		config.addAllowedMethod("OPTIONS");
+		config.addAllowedMethod("GET");
+		config.addAllowedMethod("POST");
+		config.addAllowedMethod("PUT");
+		config.addAllowedMethod("DELETE");
+		source.registerCorsConfiguration("/**", config);
+		return new CorsFilter(source);
+	}
+	@Bean
+	public CorsFilter corsFilter() {
+		CorsConfiguration corsConfiguration = new CorsConfiguration();
+		corsConfiguration.addAllowedOrigin("http://localhost:4200");
+		corsConfiguration.addAllowedHeader("*");
+		corsConfiguration.addAllowedMethod("*");
+		corsConfiguration.setAllowCredentials(true);
+
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", corsConfiguration);
+
+		return new CorsFilter(source);
+	}*/
+
 
 	@Bean
 	CommandLineRunner start(IUserService iUserService,
@@ -48,8 +93,19 @@ public class InstallateurApiApplication {
 							ICompanyService iCompanyService,
 							IAdminService iAdminService,
 							ReportRepository reportRepository,
-							StorageRepository storageRepository){
+							StorageRepository storageRepository,
+							AccountService accountService,
+							PasswordEncoder passwordEncoder){
 		return args -> {
+			/*accountService.newUser(AppUser.builder().username("user1").password(passwordEncoder.encode("1234")).build());
+			accountService.newUser(AppUser.builder().username("user2").password(passwordEncoder.encode("1234")).build());
+			accountService.newUser(AppUser.builder().username("admin").password(passwordEncoder.encode("1234")).build());
+			accountService.newRole(AppRole.builder().roleName("USER").build());
+			accountService.newRole(AppRole.builder().roleName("ADMIN").build());
+			accountService.addRoleToUser("user1","USER");
+			accountService.addRoleToUser("user2","USER");
+			accountService.addRoleToUser("admin","USER");
+			accountService.addRoleToUser("admin","ADMIN");*/
 
 			System.out.println("**********User***********");
 			/*ImageData imageData = storageRepository.findById(5L).get();

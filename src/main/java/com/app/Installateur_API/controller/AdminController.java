@@ -8,10 +8,12 @@ import com.app.Installateur_API.service.interfaces.IAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 
 @RestController
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/admin")
 public class AdminController {
     @Autowired
@@ -32,6 +34,7 @@ public class AdminController {
     public Admin loginAdmin(@PathVariable String email, @PathVariable String pass){
         return adminService.loginAdmin(email, pass);
     }*/
+   // @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/login/")
     public ResponseEntity<LoginResponseAdmin> loginAdmin(@RequestBody LoginRequest loginRequest){
         LoginResponseAdmin admin = adminService.loginAdmin(loginRequest.getEmail(),loginRequest.getPassword());
@@ -44,9 +47,9 @@ public class AdminController {
         return ResponseEntity.ok().body(admin);
     }
     @PostMapping("/add/")
-    public ResponseEntity<Admin> creatNewAdmin(@RequestBody Admin admin){
-        Admin adminSaved = adminService.creatNewAdmin(admin);
-        return ResponseEntity.ok().body(adminSaved);
+    public ResponseEntity<String> creatNewAdmin(@RequestBody Admin admin){
+        String message = adminService.creatNewAdmin(admin);
+        return ResponseEntity.ok().body(message);
     }
     @PostMapping("/update/")
     public ResponseEntity<Admin> updateAdmin(@RequestBody Admin admin){

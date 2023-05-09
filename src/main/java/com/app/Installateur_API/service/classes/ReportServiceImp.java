@@ -5,7 +5,7 @@ import com.app.Installateur_API.entity.Box;
 import com.app.Installateur_API.entity.Report;
 import com.app.Installateur_API.repository.ReportRepository;
 import com.app.Installateur_API.service.interfaces.IReportService;
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -43,5 +43,11 @@ public class ReportServiceImp implements IReportService {
     @Override
     public Report downloadReport(String fileName) {
         return reportRepository.findByName(fileName).get();
+    }
+
+    @Override
+    public boolean deleteReport(Long id) {
+        reportRepository.deleteById(id);
+        return reportRepository.findById(id).isPresent();
     }
 }

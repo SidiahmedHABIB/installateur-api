@@ -3,7 +3,7 @@ import com.app.Installateur_API.entity.Notice;
 import com.app.Installateur_API.entity.page.PageNotice;
 import com.app.Installateur_API.repository.NoticeRepository;
 import com.app.Installateur_API.service.interfaces.INoticeService;
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

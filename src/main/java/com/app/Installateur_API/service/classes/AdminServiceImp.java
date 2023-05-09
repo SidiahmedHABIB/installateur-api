@@ -2,30 +2,50 @@ package com.app.Installateur_API.service.classes;
 
 
 
-import com.app.Installateur_API.entity.Admin;
-import com.app.Installateur_API.entity.LoginResponse;
-import com.app.Installateur_API.entity.LoginResponseAdmin;
-import com.app.Installateur_API.entity.User;
+import com.app.Installateur_API.entity.*;
 import com.app.Installateur_API.entity.page.PageAdmin;
 import com.app.Installateur_API.repository.AdminRepository;
+import com.app.Installateur_API.repository.AppRoleRepository;
+import com.app.Installateur_API.repository.AppUserRepository;
 import com.app.Installateur_API.service.interfaces.IAdminService;
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Stream;
+
 @Service
 @Transactional
 public class AdminServiceImp implements IAdminService {
     @Autowired
     private AdminRepository adminRepository;
+    @Autowired
+    private AppUserRepository appUserRepository;
+    @Autowired
+    private AppRoleRepository appRoleRepository;
+    @Autowired
+    PasswordEncoder encoder;
     @Override
-    public Admin creatNewAdmin(Admin admin) {
-        return adminRepository.save(admin);
+    public String creatNewAdmin(Admin admin) {
+        if(appUserRepository.existsByEmail(admin.getEmail())){
+            return  "Error: email is already taken!";
+        }
+        List<AppRole> allRole = appRoleRepository.findAll();
+        AppUser newUser = new AppUser();
+        newUser.setEmail(admin.getEmail());
+        newUser.setPassword(encoder.encode(admin.getPassword()));
+        newUser.setAppRoles(allRole);
+        appUserRepository.save(newUser);
+        adminRepository.save(admin);
+        return  "Admin registered successfully!";
     }
 
     @Override

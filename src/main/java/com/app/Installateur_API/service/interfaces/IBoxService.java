@@ -22,4 +22,5 @@ public interface IBoxService {
     public Box installBox(Box box);
     public Box modifyBox(Box box);
     public Box isSendBox(Long id);
+    public boolean unstallBox(Box box);
 }

@@ -6,7 +6,7 @@ import com.app.Installateur_API.entity.Company;
 import com.app.Installateur_API.entity.page.PageCompany;
 import com.app.Installateur_API.repository.CompanyRepository;
 import com.app.Installateur_API.service.interfaces.ICompanyService;
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

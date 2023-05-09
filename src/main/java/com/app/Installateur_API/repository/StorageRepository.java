@@ -13,4 +13,7 @@ public interface StorageRepository extends JpaRepository<ImageData,Long> {
 
     Optional<ImageData> findByName(String fileName);
     Page<ImageData> findByBox(Box box, Pageable pageable);
+    Optional<ImageData> findByBox(Box box);
+    void deleteByBox(Box box);
+
 }

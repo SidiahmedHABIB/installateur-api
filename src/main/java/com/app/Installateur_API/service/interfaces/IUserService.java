@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public interface IUserService {
-    public User creatNewUser(User user);
+    public String creatNewUser(User user);
     public PageUser getPageAllUser(int page, int size);
     public List<User> getAllUser();
     public User getUserById(Long id);

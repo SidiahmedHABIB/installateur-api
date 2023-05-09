@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/box")
 public class BoxController {
     @Autowired
@@ -87,6 +88,11 @@ public class BoxController {
     public ResponseEntity<Box> installbox(@RequestBody Box box){
         Box boxUpdated= iBoxService.installBox(box);
         return ResponseEntity.ok().body(boxUpdated);
+    }
+    @PostMapping("/unstallBox/")
+    public ResponseEntity<Boolean> unstallbox(@RequestBody Box box){
+        Boolean boxUnstall= iBoxService.unstallBox(box);
+        return ResponseEntity.ok().body(boxUnstall);
     }
 
 }

@@ -9,7 +9,7 @@ import com.app.Installateur_API.repository.StorageRepository;
 import com.app.Installateur_API.service.interfaces.IBoxService;
 import com.app.Installateur_API.service.interfaces.ICompanyService;
 import com.app.Installateur_API.service.interfaces.IReportService;
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -37,6 +37,7 @@ public class BoxServiceImp implements IBoxService {
     public Box creatNewBox(Box box,Long companyId) {
         Company company = iCompanyService.getCompanyById(companyId);
         box.setCompanyBox(company);
+        box.setIsSend(false);
         box.setCreatAt(new Date());
         box.setUpdateAt(new Date());
         return boxRepository.save(box);
@@ -131,6 +132,40 @@ public class BoxServiceImp implements IBoxService {
         box.setUpdateAt(new Date());
         return boxRepository.save(box);
     }
+    @Override
+    public boolean unstallBox(Box box) {
+        if(box.getReportBox()!=null){
+            boolean reportDeleted= iReportService.deleteReport(box.getReportBox().getId());
+            boolean imageDeleted= storageService.deleteImageByBox(box);
+            if(reportDeleted==false&&imageDeleted==false){
+                box.setMatricul(null);
+                box.setReportBox(null);
+                box.setBoxValue(null);
+                box.setIsSend(false);
+                box.setStatus("NOTINSTALLED");
+                box.setUpdateAt(new Date());
+                boxRepository.save(box);
+                return true;
+            }else {
+                return false;
+            }
+        }else {
+            boolean imageDeleted= storageService.deleteImageByBox(box);
+            if(imageDeleted==false){
+                box.setMatricul(null);
+                box.setReportBox(null);
+                box.setBoxValue(null);
+                box.setIsSend(null);
+                box.setStatus("NOTINSTALLED");
+                box.setUpdateAt(new Date());
+                boxRepository.save(box);
+                return true;
+            }else {
+                return false;
+            }
+        }
+
+    }
 
     @Override
     public Box modifyBox(Box box) {
@@ -144,4 +179,6 @@ public class BoxServiceImp implements IBoxService {
         box.setUpdateAt(new Date());
         return boxRepository.save(box);
     }
+
+
 }

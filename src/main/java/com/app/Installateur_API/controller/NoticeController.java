@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/notice")
 public class NoticeController {
     @Autowired
@@ -21,7 +22,7 @@ public class NoticeController {
         PageNotice notices = iNoticeService.getPageNotice(page, size);
         return ResponseEntity.ok().body(notices);
     }
-    @PostMapping("/upload")
+    @PostMapping("/upload/")
     public ResponseEntity<?> uploadImage(@RequestParam("notice") MultipartFile file) throws Exception {
         String uploadNotice = iNoticeService.uploadNotice(file);
         return ResponseEntity.status(HttpStatus.OK)
