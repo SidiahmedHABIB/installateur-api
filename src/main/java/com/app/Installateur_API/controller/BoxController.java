@@ -38,14 +38,14 @@ public class BoxController {
         return ResponseEntity.ok().body(box);
     }
 
-    @GetMapping("/pageAll/{companyId}&{page}&{size}")
-    public ResponseEntity<PageBox> getPageBoxByCompany(@PathVariable Long companyId, @PathVariable int page, @PathVariable int size){
-        PageBox pageBox = iBoxService.getPageBoxByCompany(companyId,page, size);
+    @GetMapping("/pageAll/{interId}&{page}&{size}")
+    public ResponseEntity<PageBox> getPageBoxByInter(@PathVariable Long interId, @PathVariable int page, @PathVariable int size){
+        PageBox pageBox = iBoxService.getPageBoxByInter(interId,page, size);
         return ResponseEntity.ok().body(pageBox);
     }
-    @GetMapping("/pageStatus/{companyId}&{status}&{page}&{size}")
-    public ResponseEntity<PageBox> getPageBoxByStatusAndCompany(@PathVariable Long companyId,@PathVariable String status, @PathVariable int page, @PathVariable int size){
-        PageBox pageBox = iBoxService.getPageBoxByStatusAndCompany(status,companyId,page, size);
+    @GetMapping("/pageStatus/{interId}&{status}&{page}&{size}")
+    public ResponseEntity<PageBox> getPageBoxByStatusAndInter(@PathVariable Long interId,@PathVariable String status, @PathVariable int page, @PathVariable int size){
+        PageBox pageBox = iBoxService.getPageBoxByStatusAndInter(status,interId,page, size);
         return ResponseEntity.ok().body(pageBox);
     }
     @PostMapping("/upload-images")

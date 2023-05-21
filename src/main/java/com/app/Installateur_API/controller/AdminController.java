@@ -35,20 +35,15 @@ public class AdminController {
         return adminService.loginAdmin(email, pass);
     }*/
    // @CrossOrigin(origins = "*", allowedHeaders = "*")
-    @PostMapping("/login/")
-    public ResponseEntity<LoginResponseAdmin> loginAdmin(@RequestBody LoginRequest loginRequest){
-        LoginResponseAdmin admin = adminService.loginAdmin(loginRequest.getEmail(),loginRequest.getPassword());
-        return ResponseEntity.ok().body(admin);
-        //return new ResponseEntity<>(user, HttpStatus.CREATED);
-    }
+
     @GetMapping("/all/{page}&{size}")
     public ResponseEntity<PageAdmin> getAllPageAdmin(@PathVariable int page, @PathVariable int size){
         PageAdmin admin = adminService.getAllPageAdmin(page,size);
         return ResponseEntity.ok().body(admin);
     }
     @PostMapping("/add/")
-    public ResponseEntity<String> creatNewAdmin(@RequestBody Admin admin){
-        String message = adminService.creatNewAdmin(admin);
+    public ResponseEntity<Boolean> creatNewAdmin(@RequestBody Admin admin){
+        boolean message = adminService.creatNewAdmin(admin);
         return ResponseEntity.ok().body(message);
     }
     @PostMapping("/update/")

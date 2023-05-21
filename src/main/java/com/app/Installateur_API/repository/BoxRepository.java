@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BoxRepository extends JpaRepository<Box,Long> {
-    Page<Box> findByStatusAndCompanyBox(String status, Company company, Pageable pageable);
-    Page<Box> findByCompanyBox(Company company, Pageable pageable);
+    Page<Box> findByStatusAndInterventionBox(String status, Intervention intervention, Pageable pageable);
+    Page<Box> findByInterventionBox(Intervention intervention, Pageable pageable);
 
 }

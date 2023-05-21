@@ -81,7 +81,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return  http.csrf(csrf->csrf.disable())
                 .headers().frameOptions().disable().and()
-                .authorizeRequests(auth -> auth.antMatchers("/token/**").permitAll() )
+                .authorizeRequests(auth -> auth.antMatchers("/auth/**").permitAll() )
                 .authorizeRequests(auth -> auth.antMatchers("/image/**","/notice/**","/report/**").permitAll() )
                 .authorizeRequests(auth -> auth.antMatchers("/admin/**","/box/**","/users/**","/company/**","/inter/**").permitAll()  )
                 .authorizeRequests(auth -> auth.anyRequest().authenticated() )

@@ -13,7 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 @Service
@@ -25,11 +28,12 @@ public class InterventionServiceImp implements IInterventionService {
     private IUserService iUserService;
     @Autowired
     private ICompanyService iCompanyService;
+    String pattern = "yyyy-MM-dd HH:mm:ss";
+    SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
     @Override
     public Intervention creatNewIntervention(Intervention intervention,Long id) {
         Company company = iCompanyService.getCompanyById(id);
         intervention.setCompany(company);
-        intervention.setStatus("TOPLAN");
         intervention.setCreatAt(new Date());
         intervention.setUpdateAt(new Date());
         return interventionRepository.save(intervention);
@@ -114,13 +118,14 @@ public class InterventionServiceImp implements IInterventionService {
         return interventionRepository.save(intervention);
     }
 
+
     @Override
-    public Intervention addAppointment(Long uId, Long interId) {
-        User user = iUserService.getUserById(uId);
+    public Intervention addAppointment(Long uId, Long interId,@PathVariable String appointement) throws ParseException {
         Intervention intervention = getInterventionById(interId);
+        User user = iUserService.getUserById(uId);
         intervention.setUser(user);
         intervention.setStatus("ONHOLD");
-        intervention.setAppointmentAt(new Date());
+        intervention.setAppointmentAt(dateFormat.parse(appointement));
         intervention.setUpdateAt(new Date());
         return interventionRepository.save(intervention);
     }

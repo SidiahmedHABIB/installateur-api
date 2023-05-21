@@ -31,8 +31,9 @@ public class Box {
     private Date creatAt;
     private Date updateAt;
     @ManyToOne()
-    private Company companyBox;
-    @OneToMany(mappedBy = "box",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Intervention interventionBox;
+
+    @OneToMany(mappedBy = "box",fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<ImageData> boxImages = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)

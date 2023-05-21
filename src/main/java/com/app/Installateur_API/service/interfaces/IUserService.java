@@ -11,12 +11,12 @@ import java.util.Map;
 import java.util.Objects;
 
 public interface IUserService {
-    public String creatNewUser(User user);
+    public boolean creatNewUser(User user);
     public PageUser getPageAllUser(int page, int size);
     public List<User> getAllUser();
     public User getUserById(Long id);
-    public LoginResponse loginUser(String email , String password);
-    public void deleteUser(Long id);
+    public User loginUser(String email );
+    public boolean deleteUser(Long id);
     public User modifyUser(User user);
     public User modifyProfile(Long id, MultipartFile image)throws IOException;
 }

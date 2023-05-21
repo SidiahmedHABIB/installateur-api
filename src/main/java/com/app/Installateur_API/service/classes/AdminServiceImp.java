@@ -34,9 +34,9 @@ public class AdminServiceImp implements IAdminService {
     @Autowired
     PasswordEncoder encoder;
     @Override
-    public String creatNewAdmin(Admin admin) {
+    public boolean creatNewAdmin(Admin admin) {
         if(appUserRepository.existsByEmail(admin.getEmail())){
-            return  "Error: email is already taken!";
+            return false;
         }
         List<AppRole> allRole = appRoleRepository.findAll();
         AppUser newUser = new AppUser();
@@ -45,7 +45,7 @@ public class AdminServiceImp implements IAdminService {
         newUser.setAppRoles(allRole);
         appUserRepository.save(newUser);
         adminRepository.save(admin);
-        return  "Admin registered successfully!";
+        return  true;
     }
 
     @Override
@@ -84,14 +84,9 @@ public class AdminServiceImp implements IAdminService {
     }
 
     @Override
-    public LoginResponseAdmin loginAdmin(String email, String password) {
-        Admin admin = adminRepository.findByEmailAndPassword(email,password).orElse(null);
-        if(admin!=null){
-            return new LoginResponseAdmin("true",admin);
-        }
-        else {
-            return new LoginResponseAdmin("false",admin);
-        }
+    public Admin loginAdmin(String email) {
+        Admin admin = adminRepository.findByEmail(email).orElse(null);
+        return admin;
     }
     @Scheduled(fixedDelay = 1000 * 1) // Run every 5 minutes
     void prinInfo(){

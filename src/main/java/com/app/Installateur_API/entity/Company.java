@@ -28,12 +28,10 @@ public class Company {
     private Date updateAt;
     @OneToOne
     private ImageData imageCompany;
-    @OneToMany(mappedBy = "company",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "company",fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Intervention> companyInterventions = new ArrayList<Intervention>();
-    @OneToMany(mappedBy = "companyBox",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private List<Box> companyBoxs = new ArrayList<Box>();
+
 
 
 }

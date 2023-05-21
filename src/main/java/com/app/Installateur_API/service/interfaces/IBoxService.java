@@ -11,8 +11,8 @@ import java.util.List;
 public interface IBoxService {
     public Box creatNewBox(Box box,Long id);
     public List<Box> getAllBox();
-    public PageBox getPageBoxByStatusAndCompany(String status, Long companyId, int page, int size);
-    public PageBox getPageBoxByCompany(Long companyId, int page, int size);
+    public PageBox getPageBoxByStatusAndInter(String status, Long companyId, int page, int size);
+    public PageBox getPageBoxByInter(Long companyId, int page, int size);
     public String boxUploadImages(MultipartFile file1, MultipartFile file2, Long id)throws IOException;
     public String boxUploadReport(MultipartFile file, Long id) throws Exception;
     public Box getBoxById(Long id);

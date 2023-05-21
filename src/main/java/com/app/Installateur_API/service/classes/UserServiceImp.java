@@ -31,9 +31,10 @@ public class UserServiceImp implements IUserService {
     PasswordEncoder encoder;
 
     @Override
-    public String creatNewUser(User user) {
+    public boolean creatNewUser(User user) {
         if(appUserRepository.existsByEmail(user.getEmail())){
-            return  "Error: email is already taken!";
+            //return  "Error: email is already taken!";
+            return  false;
         }
         AppRole role = appRoleRepository.findById(1l).get();
         List<AppRole> roleList =new ArrayList<>();
@@ -44,7 +45,8 @@ public class UserServiceImp implements IUserService {
         newUser.setAppRoles(roleList);
         appUserRepository.save(newUser);
         userRepository.save(user);
-        return  "Technician registered successfully!";
+        //return  "Technician registered successfully!";
+        return  true;
 
     }
 
@@ -69,24 +71,35 @@ public class UserServiceImp implements IUserService {
     }
 
     @Override
-    public LoginResponse loginUser(String email, String password) {
-         User user = userRepository.findByEmailAndPassword(email,password).orElse(null);
+    public User loginUser(String email) {
+         User user = userRepository.findByEmail(email).orElse(null);
          if(user!=null){
-             return new LoginResponse("true",user);
+             return user;
          }
          else {
-             return new LoginResponse("false",user);
+             return user;
          }
 
     }
 
     @Override
-    public void deleteUser(Long id) {
-        userRepository.deleteById(id);
+    public boolean deleteUser(Long id) {
+       String email= userRepository.findById(id).get().getEmail();
+       if(email!=null){
+           appUserRepository.deleteByEmail(email);
+           userRepository.deleteById(id);
+           return  true;
+       }
+       return  false;
     }
 
     @Override
     public User modifyUser(User user) {
+        User oldUser = userRepository.findById(user.getId()).get();
+        AppUser appUser= appUserRepository.findByEmail(oldUser.getEmail());
+        appUser.setEmail(user.getEmail());
+        appUser.setPassword(encoder.encode(user.getPassword()));
+        appUserRepository.save(appUser);
         user.setUpdateAt(new Date());
         return userRepository.save(user);
     }

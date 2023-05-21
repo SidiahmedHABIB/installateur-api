@@ -34,8 +34,8 @@ public class UserController {
     }
 
     @PostMapping("/add/")
-    public ResponseEntity<String> creatNewUser(@RequestBody User user){
-        String message = iUserService.creatNewUser(user);
+    public ResponseEntity<Boolean> creatNewUser(@RequestBody User user){
+        boolean message = iUserService.creatNewUser(user);
         return ResponseEntity.ok().body(message);
     }
     @PostMapping("/updateUser/")
@@ -43,12 +43,7 @@ public class UserController {
         User userSaved = iUserService.modifyUser(user);
         return ResponseEntity.ok().body(userSaved);
     }
-    @PostMapping("/login/")
-    public ResponseEntity<LoginResponse> loginUsers(@RequestBody LoginRequest loginRequest){
-        LoginResponse user = iUserService.loginUser(loginRequest.getEmail(),loginRequest.getPassword());
-        return ResponseEntity.ok().body(user);
-        //return new ResponseEntity<>(user, HttpStatus.CREATED);
-    }
+
     @PostMapping("/updateProfile")
     public ResponseEntity<User> updateProfile(@RequestParam("image") MultipartFile file,
                                                           @RequestParam("id") Long id)throws IOException {
@@ -62,8 +57,8 @@ public class UserController {
     }
     @GetMapping("/delete/{id}")
     public ResponseEntity<Boolean> deletUserById(@PathVariable Long id){
-        iUserService.deleteUser(id);
-        return ResponseEntity.ok().body(true);
+        boolean result = iUserService.deleteUser(id);
+        return ResponseEntity.ok().body(result);
     }
 
 

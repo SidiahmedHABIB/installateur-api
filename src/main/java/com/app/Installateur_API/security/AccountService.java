@@ -37,4 +37,7 @@ public class AccountService {
     public List<AppUser> getAll(){
         return  appUserRepository.findAll();
     }
+
+    public void addRoleToUser(String user1, String user) {
+    }
 }

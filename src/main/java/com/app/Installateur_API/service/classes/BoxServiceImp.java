@@ -1,6 +1,4 @@
 package com.app.Installateur_API.service.classes;
-
-
 import com.app.Installateur_API.entity.*;
 import com.app.Installateur_API.entity.page.PageBox;
 import com.app.Installateur_API.entity.page.PageImage;
@@ -8,6 +6,7 @@ import com.app.Installateur_API.repository.BoxRepository;
 import com.app.Installateur_API.repository.StorageRepository;
 import com.app.Installateur_API.service.interfaces.IBoxService;
 import com.app.Installateur_API.service.interfaces.ICompanyService;
+import com.app.Installateur_API.service.interfaces.IInterventionService;
 import com.app.Installateur_API.service.interfaces.IReportService;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
@@ -30,14 +28,15 @@ public class BoxServiceImp implements IBoxService {
     @Autowired
     ICompanyService iCompanyService;
     @Autowired
+    IInterventionService iInterventionService;
+    @Autowired
     StorageService storageService;
     @Autowired
     IReportService iReportService;
     @Override
-    public Box creatNewBox(Box box,Long companyId) {
-        Company company = iCompanyService.getCompanyById(companyId);
-        box.setCompanyBox(company);
-        box.setIsSend(false);
+    public Box creatNewBox(Box box,Long interventionId) {
+        Intervention intervention = iInterventionService.getInterventionById(interventionId);
+        box.setInterventionBox(intervention);
         box.setCreatAt(new Date());
         box.setUpdateAt(new Date());
         return boxRepository.save(box);
@@ -49,20 +48,19 @@ public class BoxServiceImp implements IBoxService {
     }
 
     @Override
-    public PageBox getPageBoxByStatusAndCompany(String status, Long companyId, int page, int size) {
-        Company company = iCompanyService.getCompanyById(companyId);
-        PageBox pb= new PageBox();
-        Page<Box> boxPage = boxRepository.findByStatusAndCompanyBox(status, company,PageRequest.of(page, size));
+    public PageBox getPageBoxByStatusAndInter(String status, Long interventionId, int page, int size) {
+        Intervention intervention = iInterventionService.getInterventionById(interventionId);        PageBox pb= new PageBox();
+        Page<Box> boxPage = boxRepository.findByStatusAndInterventionBox(status, intervention,PageRequest.of(page, size));
         pb.setBoxes(boxPage.getContent());
         pb.setTotalPages(boxPage.getTotalPages());
         return pb;
     }
 
     @Override
-    public PageBox getPageBoxByCompany(Long companyId, int page, int size) {
-        Company company = iCompanyService.getCompanyById(companyId);
+    public PageBox getPageBoxByInter(Long interventionId, int page, int size) {
+        Intervention intervention = iInterventionService.getInterventionById(interventionId);
         PageBox pb= new PageBox();
-        Page<Box> boxPage = boxRepository.findByCompanyBox(company,PageRequest.of(page, size));
+        Page<Box> boxPage = boxRepository.findByInterventionBox(intervention,PageRequest.of(page, size));
         pb.setBoxes(boxPage.getContent());
         pb.setTotalPages(boxPage.getTotalPages());
         return pb;
@@ -120,9 +118,9 @@ public class BoxServiceImp implements IBoxService {
     }
 
     @Override
-    public Box upadateBox(Box box,Long companyId) {
-        Company company = iCompanyService.getCompanyById(companyId);
-        box.setCompanyBox(company);
+    public Box upadateBox(Box box,Long interventionId) {
+        Intervention intervention = iInterventionService.getInterventionById(interventionId);
+        box.setInterventionBox(intervention);
         box.setUpdateAt(new Date());
         return boxRepository.save(box);
     }
@@ -155,7 +153,7 @@ public class BoxServiceImp implements IBoxService {
                 box.setMatricul(null);
                 box.setReportBox(null);
                 box.setBoxValue(null);
-                box.setIsSend(null);
+                box.setIsSend(false);
                 box.setStatus("NOTINSTALLED");
                 box.setUpdateAt(new Date());
                 boxRepository.save(box);

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -44,9 +45,9 @@ public class InterventionController {
         Intervention intervention =  iInterventionService.getInterventionById(id);
         return ResponseEntity.ok().body(intervention);
     }
-    @GetMapping("/addAppointment/{uId}&{interId}")
-    public ResponseEntity<Intervention> addAppointment(@PathVariable Long uId, @PathVariable Long interId){
-        Intervention intervention = iInterventionService.addAppointment(uId,interId);
+    @GetMapping("/addAppointment/{uId}&{interId}&{appointement}")
+    public ResponseEntity<Intervention> addAppointment(@PathVariable Long uId,@PathVariable Long interId,@PathVariable String appointement) throws ParseException {
+        Intervention intervention = iInterventionService.addAppointment(uId,interId,appointement);
         return ResponseEntity.ok().body(intervention);
         //return new ResponseEntity<>(user, HttpStatus.CREATED);
     }

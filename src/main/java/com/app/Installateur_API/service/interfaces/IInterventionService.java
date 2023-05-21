@@ -2,7 +2,9 @@ package com.app.Installateur_API.service.interfaces;
 
 import com.app.Installateur_API.entity.Intervention;
 import com.app.Installateur_API.entity.page.PageIntervention;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import java.text.ParseException;
 import java.util.List;
 
 public interface IInterventionService {
@@ -18,5 +20,5 @@ public interface IInterventionService {
     public void deleteIntervention(Long id);
     public Intervention modifyIntervention(Intervention intervention);
     public Intervention upadateIntervention(Intervention intervention,Long id);
-    public Intervention addAppointment(Long uId, Long interId);
+    public Intervention addAppointment(Long uId, Long interId,String appointement) throws ParseException;
 }

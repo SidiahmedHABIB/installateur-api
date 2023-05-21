@@ -1,4 +1,6 @@
 package com.app.Installateur_API;
+import com.app.Installateur_API.entity.AppRole;
+import com.app.Installateur_API.entity.AppUser;
 import com.app.Installateur_API.security.AccountService;
 import com.app.Installateur_API.security.RsaKeyProperties;
 
@@ -97,15 +99,11 @@ public class InstallateurApiApplication {
 							AccountService accountService,
 							PasswordEncoder passwordEncoder){
 		return args -> {
-			/*accountService.newUser(AppUser.builder().username("user1").password(passwordEncoder.encode("1234")).build());
-			accountService.newUser(AppUser.builder().username("user2").password(passwordEncoder.encode("1234")).build());
-			accountService.newUser(AppUser.builder().username("admin").password(passwordEncoder.encode("1234")).build());
+			accountService.newUser(AppUser.builder().email("admin@gmail.com").password(passwordEncoder.encode("1234")).build());
 			accountService.newRole(AppRole.builder().roleName("USER").build());
 			accountService.newRole(AppRole.builder().roleName("ADMIN").build());
-			accountService.addRoleToUser("user1","USER");
-			accountService.addRoleToUser("user2","USER");
 			accountService.addRoleToUser("admin","USER");
-			accountService.addRoleToUser("admin","ADMIN");*/
+			accountService.addRoleToUser("admin","ADMIN");
 
 			System.out.println("**********User***********");
 			/*ImageData imageData = storageRepository.findById(5L).get();
